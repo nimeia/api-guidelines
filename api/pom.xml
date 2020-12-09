@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>api</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.release>8</maven.compiler.release>
+        <maven.compiler.encoding>utf-8</maven.compiler.encoding>
+        <java.version>8</java.version>
+
+        <yapi.token>b4224361f31361a696a65a11bfd3bc2da17b9d81dd51940e8ef9dd0daac8f666</yapi.token>
+        <yapi.merge>merge</yapi.merge>
+        <yapi.url>http://localhost:3000/api/open/import_data</yapi.url>
+        <yapi.json>doc/openApi3.0.json</yapi.json>
+    </properties>
+
+
+    <dependencies>
+        <!--api 定义相关基础定义-->
+        <dependency>
+            <groupId>test.code</groupId>
+            <artifactId>baseapi</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--打包源码发布-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--文档生成插件-->
+            <plugin>
+                <groupId>com.github.shalousun</groupId>
+                <artifactId>smart-doc-maven-plugin</artifactId>
+                <version>1.2.4</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.shalousun</groupId>
+                        <artifactId>smart-doc</artifactId>
+                        <version>1.9.9.1</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configFile>smart-doc.json</configFile>
+                    <projectName>购物开放API</projectName>
+                    <excludes>
+                        <!--设置排除项-->
+                        <!--<exclude>com.alibaba:fastjson</exclude>-->
+                    </excludes>
+                    <includes>
+                        <!--格式为：groupId:artifactId;参考如下-->
+                        <!--<include>org.example:order_api</include>-->
+                        <!--<include>org.example:api</include>-->
+                        <include>test.code:baseapi</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!--如果不需要在执行编译时启动smart-doc，则将phase注释掉-->
+                        <!--<phase>package</phase>-->
+                        <goals>
+                            <goal>html</goal>
+                            <goal>openapi</goal>
+                            <goal>markdown</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--部署文档到yapi-->
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <source>
+                        def apis = new File("${properties['yapi.json']}").text
+                        def url = new URL("${properties['yapi.url']}")
+                        HttpURLConnection connection = url.openConnection()
+                        connection.setRequestMethod("POST")
+                        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                        connection.setDoOutput(true);
+                        connection.setDoInput(true);
+                        connection.setUseCaches(false);
+                        connection.setInstanceFollowRedirects(true);
+                        connection.connect();
+                        connection.setConnectTimeout(20 * 1000);
+                        connection.setReadTimeout(20 * 1000);
+
+                        DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
+                        def parameterData = "type=swagger&amp;" + "merge=${properties['yapi.merge']}&amp;" + "token=${properties['yapi.token']}&amp;" + "json=${apis}"
+
+                        byte[] t = parameterData.getBytes("utf-8");
+                        dataOutputStream.write(t);
+                        dataOutputStream.flush();
+                        dataOutputStream.close();
+
+                        InputStream inputStream = connection.getInputStream();//
+
+                        reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                        String lines;
+                        response = new StringBuffer("");
+                        while ((lines = reader.readLine()) != null) {
+                            response.append(lines);
+                            response.append("\r\n");
+                        }
+                        inputStream.close()
+                        connection.disconnect()
+                        println "==========="
+                        println response
+                        println "==========="
+                    </source>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <!--maven镜像设置-->
+    <repositories>
+        <repository>
+            <id>nexus-tencentyun</id>
+            <name>Nexus tencentyun</name>
+            <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus-tencentyun</id>
+            <name>Nexus tencentyun</name>
+            <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>

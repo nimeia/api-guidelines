@@ -1,0 +1,96 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "A demo Api",
+        "description": "Title",
+        "license": {
+            "name": "no license info",
+            "url": "http://www.itgrep.com"
+        },
+        "contact": {
+            "name": "huang",
+            "url": "http://www.itgrep.com",
+            "email": "hgq@itgrep.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://www.dev.com",
+            "description": "dev"
+        },
+        {
+            "url": "https://www.api.com",
+            "description": "pro"
+        }
+    ],
+    "components": {
+        "headers": {
+            "api": {
+                "description": "the api headers",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas": {
+            "User": {
+                "type": "object",
+                "description": "用户基础信息",
+                "discriminator": {
+                    "propertyName": "type"
+                },
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": "1001",
+                    "name": "huang"
+                }
+            }
+        }
+    },
+    "paths": {
+        "/user": {
+            "get": {
+                "description": "get the user info user the user id",
+                "parameters": [
+                    {
+                        "description": "headers",
+                        "in": "header",
+                        "$ref": "#/"
+                    },
+                    {
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "description": "x-api-d",
+                        "name": "x-api-id",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用户信息",
+                        "content": {
+                            "application/json": {
+                                "encoding": {
+                                },
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

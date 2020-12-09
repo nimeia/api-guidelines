@@ -7,11 +7,14 @@
     <groupId>org.example</groupId>
     <artifactId>api-guidelines</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
-        <module>api-define</module>
+        <!-- tips: 注意，这里只有包含关系，子项目的parent 并不是该项目，这是因为方便发布管理-->
+        <!-- tips: 实际项目中，本项目里的子模块应该为单独的一个git repo-->
+        <module>api</module>
+        <module>baseapi</module>
+        <module>rpc-api</module>
     </modules>
     <packaging>pom</packaging>
-
-
 
 </project>
