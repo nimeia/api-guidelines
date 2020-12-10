@@ -1,3 +1,13 @@
 {
-  "outPath": "./doc"
+    "outPath": "./generated/doc",
+    "requestHeaders": [
+        {
+            "name": "token",
+            "type": "string",
+            "desc": "认证token",
+            "required": true,
+            "value": "xxxxxxxxxxxxxxxxxxxxxxxx",
+            "since": "v1.0.0"
+        }
+    ]
 }

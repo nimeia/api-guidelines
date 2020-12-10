@@ -6,7 +6,9 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package company.project.api.base;
+package company.project.api.base.request;
+
+import company.project.api.base.page.ApiRequestPage;
 
 import java.io.Serializable;
 
@@ -16,34 +18,12 @@ import java.io.Serializable;
  * @param <T extends Serializable>
  * @author huang
  */
-public class ApiRequest<T extends Serializable> implements Serializable {
-
-    /**
-     * 标志某一个请求,可以按其跟踪一个接口的请求
-     */
-    private String requestId;
-
-    /**
-     * tip: 一些接口可能需要定义较长的超时时间,通过该属性修改处理
-     */
-    private Long timeOut;
-
-    /**
-     * 标记一个用户的信息,在从报文体中分开
-     */
-    private String token;
-
-    /**
-     * the business data
-     *
-     * @see T
-     */
-    private T data;
+public class ApiRequest<T extends Serializable> extends ApiSimpleRequest<T> implements Serializable {
 
     /**
      * 分页信息
      */
-    private ApiPage page;
+    private ApiRequestPage page;
 
     /**
      * 快速构建方法
@@ -60,7 +40,7 @@ public class ApiRequest<T extends Serializable> implements Serializable {
     }
 
     public ApiRequest<T> page(Integer page, Integer size) {
-        this.page = ApiPage.simple(page, size);
+        this.page = ApiRequestPage.simple(page, size);
         return this;
     }
 
@@ -84,44 +64,12 @@ public class ApiRequest<T extends Serializable> implements Serializable {
         return this;
     }
 
-
-    public ApiPage getPage() {
+    public ApiRequestPage getPage() {
         return page;
     }
 
-    public void setPage(ApiPage page) {
+    public void setPage(ApiRequestPage page) {
         this.page = page;
     }
 
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
-
-    public Long getTimeOut() {
-        return timeOut;
-    }
-
-    public void setTimeOut(Long timeOut) {
-        this.timeOut = timeOut;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }

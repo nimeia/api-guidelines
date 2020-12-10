@@ -1,4 +1,4 @@
-package company.project.api;
+package company.project.api.vo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

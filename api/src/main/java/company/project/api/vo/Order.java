@@ -1,4 +1,4 @@
-package company.project.api;
+package company.project.api.vo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author huang
  * @since 1.0.0
  */
-public class OrderVo implements Serializable {
+public class Order implements Serializable {
 
     /**
      * 订单id
