@@ -17,6 +17,11 @@ public class ApiSimpleRequest<T extends Serializable> implements Serializable {
     protected String requestId;
 
     /**
+     * 业务上是否成功
+     */
+    protected Boolean success;
+
+    /**
      * 请求时间
      */
     protected Date requestDate;
@@ -71,5 +76,21 @@ public class ApiSimpleRequest<T extends Serializable> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public Date getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(Date requestDate) {
+        this.requestDate = requestDate;
     }
 }
