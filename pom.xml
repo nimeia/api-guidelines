@@ -14,6 +14,7 @@
         <module>api</module>
         <module>baseapi</module>
         <module>rpc-api</module>
+        <module>client</module>
     </modules>
     <packaging>pom</packaging>
 
