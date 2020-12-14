@@ -6,6 +6,7 @@ import company.project.api.base.request.ApiSimpleRequest;
 import company.project.api.base.response.ApiSimpleResponse;
 import company.project.api.qvo.UserOrderQvo;
 import company.project.api.vo.Order;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @since v1.0.0
  * @restApi
  */
+@FeignClient
 @RequestMapping("/shop")
 public interface ShopApi {
 
