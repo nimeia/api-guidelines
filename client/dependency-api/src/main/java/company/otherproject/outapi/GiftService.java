@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class GiftService {
@@ -43,4 +44,16 @@ public class GiftService {
         return giftInfoVo;
     }
 
+    /**
+     * 批量生成
+     * @param giftInfoVos
+     * @return
+     */
+    public List<GiftInfoVo> betchMake(List<GiftInfoVo> giftInfoVos) {
+        // 处理业务
+        // tips API 服务端应该提供批量处理能力
+        //List list =  shopApi.betchMake();
+
+        return null;
+    }
 }
