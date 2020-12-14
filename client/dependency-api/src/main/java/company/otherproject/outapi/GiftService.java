@@ -15,7 +15,7 @@ import java.util.Date;
 @Component
 public class GiftService {
 
-    @Autowired
+    @Autowired(required = false)
     ShopApi shopApi;
 
     /**
@@ -29,7 +29,7 @@ public class GiftService {
 
         Order order = new Order();
         order.setCreateDate(new Date());
-        //order.setCustomer(userInfo);
+        // order.setCustomer(userInfo);
         // do anything you need ....
         ApiResponse<String> orderApiResponse = shopApi.makeOrder(ApiRequest.simple(order));
 

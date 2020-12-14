@@ -20,7 +20,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- tips 依赖不允许传递到项目内部，避免强依赖-->
+        <!-- tips 依赖不允许传递到项目内部，避免强依赖 ，子项目中需要以scope runtime 的方式加载-->
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>api</artifactId>
