@@ -29,6 +29,11 @@ public class ApiSimpleResponse<T extends Serializable> implements Serializable {
     protected String code;
 
     /**
+     * 业务上是否成功
+     */
+    protected Boolean success;
+
+    /**
      * 调用结果信息
      */
     protected String message;
@@ -125,4 +130,11 @@ public class ApiSimpleResponse<T extends Serializable> implements Serializable {
         this.businessMessage = businessMessage;
     }
 
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
 }
