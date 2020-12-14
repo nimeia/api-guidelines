@@ -1,6 +1,7 @@
 package company.project.api.base.request;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * api 基础查询对象
@@ -14,6 +15,11 @@ public class ApiSimpleRequest<T extends Serializable> implements Serializable {
      *
      */
     protected String requestId;
+
+    /**
+     * 请求时间
+     */
+    protected Date requestDate;
 
     /**
      * 一些接口可能需要定义较长的超时时间,通过该属性修改处理
